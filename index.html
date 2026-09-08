@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Una sorpresa para ti ❤️</title>
+  <title>Un universo para ti ✨</title>
   <style>
     * {
       box-sizing: border-box;
@@ -11,164 +11,259 @@
       padding: 0;
     }
     body {
-      background-color: #ffe6e8;
+      background-color: #05010b;
+      color: #fff;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    #webgl {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    /* Título */
+    .top-title {
+      position: absolute;
+      top: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #ff66c4;
+      text-shadow: 0 0 15px #ff007f;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Frases flotantes en pantalla */
+    .floating-texts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .text-item {
+      position: absolute;
+      color: rgba(255, 230, 242, 0.95);
+      font-size: 13px;
+      text-shadow: 0 0 10px #ff3385;
+      animation: float 4s infinite ease-in-out;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Botón flotante estilo Carta */
+    .btn-letter {
+      position: absolute;
+      bottom: 25px;
+      right: 25px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #ff3385, #ff0055);
+      border-radius: 50%;
       display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      box-shadow: 0 0 20px #ff007f;
+      cursor: pointer;
+      z-index: 5;
+      animation: pulse 1.6s infinite;
+      border: none;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* Ventana Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 10;
       justify-content: center;
       align-items: center;
       padding: 20px;
     }
-    .card-container {
-      position: relative;
-      background: #ffffff;
-      max-width: 480px;
-      width: 100%;
+    .modal-content {
+      background: #140320;
+      border: 1.5px solid #ff4d94;
+      box-shadow: 0 0 25px rgba(255, 0, 127, 0.6);
       border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(230, 57, 70, 0.2);
-      padding: 30px 20px;
+      padding: 25px;
+      max-width: 420px;
+      width: 100%;
       text-align: center;
-      border: 2px solid #ffccd5;
-      overflow: hidden;
+      position: relative;
     }
-    /* Corazones decorativos en las esquinas superiores */
-    .corner-heart {
+    .close-btn {
       position: absolute;
-      font-size: 24px;
-      top: 12px;
-      animation: pulse 1.2s infinite;
-    }
-    .heart-left {
-      left: 15px;
-    }
-    .heart-right {
-      right: 15px;
-    }
-    .heart-icon {
-      font-size: 50px;
-      animation: pulse 1.2s infinite;
-      margin-bottom: 10px;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.15); }
-      100% { transform: scale(1); }
-    }
-    h1 {
-      color: #d62828;
-      font-size: 24px;
-      margin: 10px 0;
-    }
-    p.message {
-      color: #4a4a4a;
-      font-size: 16px;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-    .btn-surprise {
-      background-color: #ff4d6d;
-      color: white;
-      border: none;
-      padding: 12px 26px;
-      font-size: 16px;
-      font-weight: bold;
-      border-radius: 25px;
+      top: 10px;
+      right: 16px;
+      color: #ff66c4;
+      font-size: 26px;
       cursor: pointer;
-      transition: background 0.3s, transform 0.2s;
-    }
-    .btn-surprise:hover {
-      background-color: #c9184a;
-      transform: translateY(-2px);
-    }
-    
-    /* Contenido de la carta (Oculto al inicio) */
-    #sorpresa {
-      display: none;
-    }
-    .letter-title {
-      color: #d62828;
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 15px;
     }
     audio {
       width: 100%;
-      margin-bottom: 15px;
+      margin: 15px 0;
     }
     .scroll-box {
       max-height: 220px;
       overflow-y: auto;
-      background: #fff0f3;
-      padding: 18px;
-      border-radius: 15px;
-      border: 1px solid #ffccd5;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid #ff66c4;
       text-align: left;
-      color: #c9184a;
-      font-size: 15px;
-      line-height: 1.6;
+      color: #ffe6f2;
+      font-size: 14px;
+      line-height: 1.7;
     }
     .scroll-box::-webkit-scrollbar {
-      width: 6px;
+      width: 5px;
     }
     .scroll-box::-webkit-scrollbar-thumb {
-      background-color: #ff4d6d;
+      background: #ff3385;
       border-radius: 10px;
     }
   </style>
+
+  <!-- Librería Three.js para la Galaxia 3D -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
-  <div class="card-container">
-    <!-- Corazones en las esquinas de la tarjeta -->
-    <div class="corner-heart heart-left">💖</div>
-    <div class="corner-heart heart-right">💖</div>
+  <div class="top-title">Para ti con todo mi amor ✨</div>
 
-    <!-- PANTALLA INICIAL (Se quita al hacer clic) -->
-    <div id="pantalla-inicio">
-      <div class="heart-icon">❤️</div>
-      <h1>Para la chica más especial ✨</h1>
-      <p class="message">
-        Hola mi amor, solo quería dejarte este pequeño detalle para recordarte lo mucho que te quiero y lo importante que eres para mí.
-      </p>
-      <button class="btn-surprise" onclick="mostrarCarta()">¡Tócame aquí! 🎁</button>
-    </div>
+  <canvas id="webgl"></canvas>
 
-    <!-- SEGUNDA PANTALLA: CARTA Y MÚSICA (Aparece sola) -->
-    <div id="sorpresa">
-      <div class="letter-title">Para el amor de mi vida 🥰</div>
+  <!-- Frases alrededor -->
+  <div class="floating-texts">
+    <div class="text-item" style="top: 15%; left: 8%;">Eres mi persona favorita 💕</div>
+    <div class="text-item" style="top: 22%; left: 62%;">Mi corazón es tuyo 💖</div>
+    <div class="text-item" style="top: 75%; left: 10%;">3,000 años no serían suficientes ⏳</div>
+    <div class="text-item" style="top: 82%; left: 55%;">Contigo todo es mágico 🥰</div>
+  </div>
 
-      <!-- Reproductor de música "Cama y Mesa" -->
+  <button class="btn-letter" onclick="abrirCarta()">✉️</button>
+
+  <!-- Carta Emergente -->
+  <div class="modal" id="modalCarta">
+    <div class="modal-content">
+      <span class="close-btn" onclick="cerrarCarta()">&times;</span>
+      <h2 style="color: #ff66c4; font-size: 20px; margin-top: 5px;">Un mensaje especial para ti 🥰</h2>
+
       <audio id="miMusica" controls loop preload="auto">
         <source src="https://ia801503.us.archive.org/15/items/roberto-carlos-cama-y-mesa/Roberto%20Carlos%20-%20Cama%20y%20Mesa.mp3" type="audio/mpeg">
-        Tu navegador no soporta el reproductor de audio.
       </audio>
 
-      <!-- Caja deslizante con el mensaje -->
       <div class="scroll-box">
-        <p><strong>Mi niña hermosa:</strong></p><br>
-        <p>Hoy solo quiero recordarte lo increíble que eres y lo afortunado que me siento de tenerte a mi lado. Desde que llegaste a mi vida, todo tiene un color más bonito y cada día a tu lado es un regalo enorme.</p><br>
-        <p>Quiero ser ese abrazo al que siempre quieras volver, la mano que nunca te suelte y el motivo de muchas de tus sonrisas. Prometo cuidarte, escucharte, valorarte y hacerte saber lo mucho que vales en cada momento.</p><br>
-        <p>Gracias por ser como eres, tan bonita, tan especial y tan única. Te amo con todo mi corazón y este pequeño detalle es solo un pedacito de todo lo que siento por ti. ¡Siempre juntos! 🥰🌹✨</p>
+        <p><strong>Hola mi vida:</strong></p><br>
+        <p>Yo te amaría como Meliodas amó a Elizabeth durante 3,000 años, viéndola reencarnar 106 veces y aun así la amaba con la misma intensidad de siempre...</p><br>
+        <p>Eres esa persona única que llegó a mi vida para iluminarlo todo. Cada detalle tuyo, tu sonrisa y tu forma de ser hacen que cada día sea único.</p><br>
+        <p>Gracias por estar conmigo y dejarme compartir estos momentos a tu lado. ¡Te quiero infinitamente! 💖🌹✨</p>
       </div>
     </div>
-
   </div>
 
   <script>
-    function mostrarCarta() {
-      // Ocultar la pantalla de inicio
-      document.getElementById('pantalla-inicio').style.display = 'none';
-      
-      // Mostrar la carta con el reproductor
-      const carta = document.getElementById('sorpresa');
-      carta.style.display = 'block';
+    // Configuración Three.js
+    const canvas = document.getElementById('webgl');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 8;
 
-      // Reproducir música iniciando en el segundo 15
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Crear partículas de la Galaxia en Espiral / Corazón
+    const particleCount = 4000;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+
+    const colorPink = new THREE.Color('#ff007f');
+    const colorCyan = new THREE.Color('#00f0ff');
+    const colorWhite = new THREE.Color('#ffffff');
+
+    for (let i = 0; i < particleCount; i++) {
+      let t = Math.PI * 2 * Math.random();
+      // Forma de Corazón
+      let x = 16 * Math.pow(Math.sin(t), 3);
+      let y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+      
+      let scale = 0.22;
+      positions[i * 3] = x * scale + (Math.random() - 0.5) * 0.8;
+      positions[i * 3 + 1] = y * scale + (Math.random() - 0.5) * 0.8;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 2;
+
+      let mixedColor = Math.random() > 0.4 ? colorPink : (Math.random() > 0.5 ? colorCyan : colorWhite);
+      colors[i * 3] = mixedColor.r;
+      colors[i * 3 + 1] = mixedColor.g;
+      colors[i * 3 + 2] = mixedColor.b;
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    const material = new THREE.PointsMaterial({
+      size: 0.04,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.85
+    });
+
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+
+    // Animación
+    function animate() {
+      requestAnimationFrame(animate);
+      particles.rotation.z += 0.002;
+      particles.rotation.y += 0.003;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Control de la Carta
+    function abrirCarta() {
+      document.getElementById('modalCarta').style.display = 'flex';
       const musica = document.getElementById('miMusica');
       musica.currentTime = 15;
-      musica.play().catch(e => console.log("Se requiere interacción para iniciar audio"));
+      musica.play().catch(e => console.log("Audio interactivo"));
+    }
+
+    function cerrarCarta() {
+      document.getElementById('modalCarta').style.display = 'none';
+      document.getElementById('miMusica').pause();
     }
   </script>
-
 </body>
-</html>
+  </html>
+  
