@@ -20,19 +20,34 @@
       padding: 20px;
     }
     .card-container {
+      position: relative;
       background: #ffffff;
       max-width: 480px;
       width: 100%;
       border-radius: 20px;
       box-shadow: 0 10px 25px rgba(230, 57, 70, 0.2);
-      padding: 30px;
+      padding: 30px 20px;
       text-align: center;
       border: 2px solid #ffccd5;
+      overflow: hidden;
+    }
+    /* Corazones decorativos en las esquinas superiores */
+    .corner-heart {
+      position: absolute;
+      font-size: 24px;
+      top: 12px;
+      animation: pulse 1.2s infinite;
+    }
+    .heart-left {
+      left: 15px;
+    }
+    .heart-right {
+      right: 15px;
     }
     .heart-icon {
       font-size: 50px;
       animation: pulse 1.2s infinite;
-      cursor: pointer;
+      margin-bottom: 10px;
     }
     @keyframes pulse {
       0% { transform: scale(1); }
@@ -42,20 +57,19 @@
     h1 {
       color: #d62828;
       font-size: 24px;
-      margin: 15px 0;
+      margin: 10px 0;
     }
     p.message {
       color: #4a4a4a;
       font-size: 16px;
       line-height: 1.6;
       margin-bottom: 20px;
-      white-space: pre-line;
     }
     .btn-surprise {
       background-color: #ff4d6d;
       color: white;
       border: none;
-      padding: 12px 24px;
+      padding: 12px 26px;
       font-size: 16px;
       font-weight: bold;
       border-radius: 25px;
@@ -66,30 +80,33 @@
       background-color: #c9184a;
       transform: translateY(-2px);
     }
-    .hidden-content {
+    
+    /* Contenido de la carta (Oculto al inicio) */
+    #sorpresa {
       display: none;
-      margin-top: 20px;
-      padding-top: 20px;
-      border-top: 1px dashed #ffb3c1;
+    }
+    .letter-title {
+      color: #d62828;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 15px;
     }
     audio {
       width: 100%;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
-    /* Estilos para la caja deslizante */
     .scroll-box {
-      max-height: 180px;
+      max-height: 220px;
       overflow-y: auto;
       background: #fff0f3;
-      padding: 15px;
-      border-radius: 12px;
+      padding: 18px;
+      border-radius: 15px;
       border: 1px solid #ffccd5;
       text-align: left;
       color: #c9184a;
       font-size: 15px;
       line-height: 1.6;
     }
-    /* Estilo suave para la barra de desplazamiento */
     .scroll-box::-webkit-scrollbar {
       width: 6px;
     }
@@ -102,47 +119,54 @@
 <body>
 
   <div class="card-container">
-    <div class="heart-icon" onclick="mostrarOculto()">❤️</div>
-    <h1>Para la dueña de mi corazón ✨</h1>
-    
-    <p class="message">
-      Quiero ser la persona que te abrace en tus días tristes y quien te saque la mejor de las sonrisas cada día.
-    </p>
+    <!-- Corazones en las esquinas de la tarjeta -->
+    <div class="corner-heart heart-left">💖</div>
+    <div class="corner-heart heart-right">💖</div>
 
-    <button class="btn-surprise" onclick="mostrarOculto()">Tócame para ver tu sorpresa 🎁</button>
+    <!-- PANTALLA INICIAL (Se quita al hacer clic) -->
+    <div id="pantalla-inicio">
+      <div class="heart-icon">❤️</div>
+      <h1>Para la chica más especial ✨</h1>
+      <p class="message">
+        Hola mi amor, solo quería dejarte este pequeño detalle para recordarte lo mucho que te quiero y lo importante que eres para mí.
+      </p>
+      <button class="btn-surprise" onclick="mostrarCarta()">¡Tócame aquí! 🎁</button>
+    </div>
 
-    <div class="hidden-content" id="sorpresa">
-      
-      <!-- Reproductor de música -->
-      <audio id="miMusica" controls loop>
-        <source src="https://129019-roberto-carlos.mp3.pm/song/2607329-cama-e-mesa/#t=15" type="audio/mpeg">
+    <!-- SEGUNDA PANTALLA: CARTA Y MÚSICA (Aparece sola) -->
+    <div id="sorpresa">
+      <div class="letter-title">Para el amor de mi vida 🥰</div>
+
+      <!-- Reproductor de música "Cama y Mesa" -->
+      <audio id="miMusica" controls loop preload="auto">
+        <source src="https://ia801503.us.archive.org/15/items/roberto-carlos-cama-y-mesa/Roberto%20Carlos%20-%20Cama%20y%20Mesa.mp3" type="audio/mpeg">
         Tu navegador no soporta el reproductor de audio.
       </audio>
 
-      <!-- Barrita deslizante con el texto de amor -->
+      <!-- Caja deslizante con el mensaje -->
       <div class="scroll-box">
         <p><strong>Mi niña hermosa:</strong></p><br>
         <p>Hoy solo quiero recordarte lo increíble que eres y lo afortunado que me siento de tenerte a mi lado. Desde que llegaste a mi vida, todo tiene un color más bonito y cada día a tu lado es un regalo enorme.</p><br>
         <p>Quiero ser ese abrazo al que siempre quieras volver, la mano que nunca te suelte y el motivo de muchas de tus sonrisas. Prometo cuidarte, escucharte, valorarte y hacerte saber lo mucho que vales en cada momento.</p><br>
         <p>Gracias por ser como eres, tan bonita, tan especial y tan única. Te amo con todo mi corazón y este pequeño detalle es solo un pedacito de todo lo que siento por ti. ¡Siempre juntos! 🥰🌹✨</p>
       </div>
-
     </div>
+
   </div>
 
   <script>
-    function mostrarOculto() {
-      const elemento = document.getElementById('sorpresa');
-      const musica = document.getElementById('miMusica');
+    function mostrarCarta() {
+      // Ocultar la pantalla de inicio
+      document.getElementById('pantalla-inicio').style.display = 'none';
+      
+      // Mostrar la carta con el reproductor
+      const carta = document.getElementById('sorpresa');
+      carta.style.display = 'block';
 
-      if (elemento.style.display === 'block') {
-        elemento.style.display = 'none';
-        musica.pause();
-      } else {
-        elemento.style.display = 'block';
-        musica.currentTime = 15;
-        musica.play().catch(e => console.log("Permiso de audio requerido"));
-      }
+      // Reproducir música iniciando en el segundo 15
+      const musica = document.getElementById('miMusica');
+      musica.currentTime = 15;
+      musica.play().catch(e => console.log("Se requiere interacción para iniciar audio"));
     }
   </script>
 
