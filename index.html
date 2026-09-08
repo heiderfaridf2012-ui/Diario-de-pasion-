@@ -21,7 +21,7 @@
     }
     .card-container {
       background: #ffffff;
-      max-width: 450px;
+      max-width: 480px;
       width: 100%;
       border-radius: 20px;
       box-shadow: 0 10px 25px rgba(230, 57, 70, 0.2);
@@ -69,13 +69,33 @@
     .hidden-content {
       display: none;
       margin-top: 20px;
-      padding-top: 15px;
+      padding-top: 20px;
       border-top: 1px dashed #ffb3c1;
     }
     audio {
-      margin-top: 15px;
       width: 100%;
-      max-width: 300px;
+      margin-bottom: 20px;
+    }
+    /* Estilos para la caja deslizante */
+    .scroll-box {
+      max-height: 180px;
+      overflow-y: auto;
+      background: #fff0f3;
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid #ffccd5;
+      text-align: left;
+      color: #c9184a;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    /* Estilo suave para la barra de desplazamiento */
+    .scroll-box::-webkit-scrollbar {
+      width: 6px;
+    }
+    .scroll-box::-webkit-scrollbar-thumb {
+      background-color: #ff4d6d;
+      border-radius: 10px;
     }
   </style>
 </head>
@@ -83,37 +103,45 @@
 
   <div class="card-container">
     <div class="heart-icon" onclick="mostrarOculto()">❤️</div>
-    <h1>Para la chica más especial ✨</h1>
+    <h1>Para la dueña de mi corazón ✨</h1>
     
     <p class="message">
-      Hola mi amor, solo quería dejarte este pequeño detalle para recordarte lo mucho que te quiero y lo importante que eres para mí. 
+      Quiero ser la persona que te abrace en tus días tristes y quien te saque la mejor de las sonrisas cada día.
     </p>
 
-    <button class="btn-surprise" onclick="mostrarOculto()">¡Tócame aquí! 🎁</button>
+    <button class="btn-surprise" onclick="mostrarOculto()">Tócame para ver tu sorpresa 🎁</button>
 
     <div class="hidden-content" id="sorpresa">
-      <p style="color: #c9184a; font-weight: bold; font-size: 18px;">
-        ¡Gracias por sacarme siempre una sonrisa! 🥰
-      </p>
-      <p style="margin-top: 8px; color: #555;">
-        Prometo estar siempre para ti y sacarte miles de sonrisas más. ¡Te adoro!
-      </p>
       
-      <!-- Música de fondo opcional -->
-      <audio controls autoplay loop style="margin-top:20px;">
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+      <!-- Reproductor de música -->
+      <audio id="miMusica" controls loop>
+        <source src="https://129019-roberto-carlos.mp3.pm/song/2607329-cama-e-mesa/#t=15" type="audio/mpeg">
         Tu navegador no soporta el reproductor de audio.
       </audio>
+
+      <!-- Barrita deslizante con el texto de amor -->
+      <div class="scroll-box">
+        <p><strong>Mi niña hermosa:</strong></p><br>
+        <p>Hoy solo quiero recordarte lo increíble que eres y lo afortunado que me siento de tenerte a mi lado. Desde que llegaste a mi vida, todo tiene un color más bonito y cada día a tu lado es un regalo enorme.</p><br>
+        <p>Quiero ser ese abrazo al que siempre quieras volver, la mano que nunca te suelte y el motivo de muchas de tus sonrisas. Prometo cuidarte, escucharte, valorarte y hacerte saber lo mucho que vales en cada momento.</p><br>
+        <p>Gracias por ser como eres, tan bonita, tan especial y tan única. Te amo con todo mi corazón y este pequeño detalle es solo un pedacito de todo lo que siento por ti. ¡Siempre juntos! 🥰🌹✨</p>
+      </div>
+
     </div>
   </div>
 
   <script>
     function mostrarOculto() {
       const elemento = document.getElementById('sorpresa');
+      const musica = document.getElementById('miMusica');
+
       if (elemento.style.display === 'block') {
         elemento.style.display = 'none';
+        musica.pause();
       } else {
         elemento.style.display = 'block';
+        musica.currentTime = 15;
+        musica.play().catch(e => console.log("Permiso de audio requerido"));
       }
     }
   </script>
